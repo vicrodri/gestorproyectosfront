@@ -1,5 +1,0 @@
-'use strict';
-
-app.controller("listadoGesTamanos",listadoTamanos);
-app.controller("altaGesTamanos",altaTamanos);
-app.controller("editGesTamanos",editarTamanos);

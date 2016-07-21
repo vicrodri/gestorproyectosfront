@@ -1,5 +1,0 @@
-'use strict';
-
-app.controller("listaTec",listadoTecnologias);
-app.controller("altaTec",altaTecnologias);
-app.controller("editarTec",editarTecnologias);

@@ -1,7 +1,0 @@
-nav.navbar.navbar-default
- .container-fluid
-  ul.nav.navbar-nav
-   li
-    a(href="#/GesTareas/") Buscador/Listado
-   li
-    a(href="#/GesTareas/alta") alta

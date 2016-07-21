@@ -1,8 +1,0 @@
-doctype html
-html(ng-app="frontApp")
-  head
-    title Un título que pongo aquí
-    link(rel="stylesheet", href="styles/main.css")
-  body
-    
-    

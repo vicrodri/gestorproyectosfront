@@ -1,2 +1,0 @@
-app.controller("listadoGesTareas",listadoGesTareas);
-app.controller("altaGesTareas",altaGesTareas);

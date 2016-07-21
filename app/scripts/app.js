@@ -33,7 +33,7 @@ var app=angular
   ])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	  $routeProvider.when('/', {
-		  templateUrl: 'views/partials/home.html',
+		  templateUrl: 'views/partials/blank.html',
 		  controller: 'MainCtrl'
 	  })
 	  //arquitecturas

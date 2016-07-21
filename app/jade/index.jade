@@ -1,13 +1,21 @@
 doctype html
 html(ng-app="frontApp")
-	head
-		title Un título que pongo aquí
-		link(rel="stylesheet", href="styles/main.css")
-		meta(charset="UTF-8")
-	body
-		header.container
-			include ./views/partials/menu
-		
-		div.container(ng-view)
-		include ./views/partials/scripts
-		
+  head
+    title Gestor de Proyectos
+    link(rel="stylesheet", href="styles/main.css")
+    link(rel="stylesheet", href="styles/menu.css")
+    meta(charset="UTF-8")
+  body
+    header.container
+      include ./views/partials/home.jade
+
+    div(id="menu_lateral", style="width: 20%; float:left;")
+      // Menu Superior
+      //include ./views/partials/menu
+      //Menu Lateral
+      include ./views/partials/side_menu
+    
+    div.container(id="contenido", style="width: 80%; float:left;", ng-view)
+
+    include ./views/partials/scripts
+    
