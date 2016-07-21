@@ -1,0 +1,200 @@
+'use strict';
+
+/**
+ * @ngdoc overview
+ * @name frontApp
+ * @description
+ * # frontApp
+ *
+ * Main module of the application.
+ */
+//Variables para cada sección de la app
+var arqSubpath="/arq/";
+var clientesSubpath="/clientes/";
+var complejidadesSubpath= "/complejidades/";
+var tecnologiasSubpath="/tecnologias/";
+var itemSubpath="/items/";
+var gesTareas="/GesTareas/";
+var gesTamano="/tamano/";
+var gruposTareas = "/GruposTareas/";
+var rolesSubpath="/roles/";
+var gesPersonas="/GesPersonas/"
+var proyectos="/proyectos/";
+var app=angular
+  .module('frontApp', [
+    'ngAnimate',
+    'ngCookies',
+    'ngResource',
+    'ngRoute',
+    'ngSanitize',
+    'ngTouch',
+    'ui.bootstrap'
+  ])
+  .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+	  $routeProvider.when('/', {
+		  templateUrl: 'views/partials/home.html',
+		  controller: 'MainCtrl'
+	  })
+	  //arquitecturas
+	  .when(arqSubpath,{
+		  templateUrl:'views/partials/arquitecturas/listado_ARQ.html',
+		  controller:'listaARQ'
+	  })
+	  .when(arqSubpath+"altas",{
+		  templateUrl:'views/partials/arquitecturas/alta_ARQ.html',
+		  controller:'altaARQ'
+	  })
+	  .when(arqSubpath+"editar/:id",{
+		  templateUrl:'views/partials/arquitecturas/editar_ARQ.html',
+		  controller:'editarARQ'
+	  })
+	  /* Tecnologias */
+	  .when(tecnologiasSubpath+"buscar-listado",{
+		  templateUrl:'views/partials/tecnologias/buscar-listado.html',
+		  controller:'listaTec'
+	  })
+	  .when(tecnologiasSubpath+"alta",{
+		  templateUrl:'views/partials/tecnologias/alta.html',
+		  controller:'altaTec'
+	  })
+	  .when(tecnologiasSubpath+"editar/:id",{
+		  templateUrl:'views/partials/tecnologias/editar.html',
+		  controller:'editarTec'
+	  })
+	  /* Clientes */
+	  .when(clientesSubpath,{
+		  templateUrl: 'views/partials/clientes/listado.html',
+		  controller: 'ClientsCtrl',
+		  mode: 'list'
+	  })
+	  .when(clientesSubpath + 'alta',{
+		  templateUrl: 'views/partials/clientes/alta.html',
+		  controller: 'ClientsCtrl',
+		  mode: 'new'
+	  })
+	  .when(clientesSubpath + 'editar/:idx', {
+		  templateUrl: 'views/partials/clientes/alta.html',
+		  controller: 'ClientsCtrl',
+		  mode: 'edit'
+	  })
+	  .when(clientesSubpath + 'borrar/:idx', {
+		  templateUrl: 'views/partials/clientes/borrar.html',
+		  controller: 'ClientsCtrl',
+		  mode: 'delete'
+	  })
+	  /* Complejidades */
+	  .when(complejidadesSubpath,{
+		  templateUrl: 'views/partials/complejidades/listado.html',
+		  controller: 'ComplejidadesCtrl',
+		  mode: 'list'
+	  })
+	  .when(complejidadesSubpath + 'alta',{
+		  templateUrl: 'views/partials/complejidades/alta.html',
+		  controller: 'ComplejidadesCtrl',
+		  mode: 'new'
+	  })
+	  .when(complejidadesSubpath + 'editar/:idx', {
+		  templateUrl: 'views/partials/complejidades/alta.html',
+		  controller: 'ComplejidadesCtrl',
+		  mode: 'edit'
+	  })
+	  .when(complejidadesSubpath + 'borrar/:idx', {
+		  templateUrl: 'views/partials/complejidades/borrar.html',
+		  controller: 'ComplejidadesCtrl',
+		  mode: 'delete'
+	  })
+	  /* Grupos de tareas */
+	  .when(gruposTareas,{
+		  templateUrl: 'views/partials/GruposTareas/listado.html',
+		  controller: 'GruposTareasCtrl',
+		  mode: 'list'
+	  })
+	  .when(gruposTareas + 'alta',{
+		  templateUrl: 'views/partials/GruposTareas/alta.html',
+		  controller: 'GruposTareasCtrl',
+		  mode: 'new'
+	  })
+//	  .when(gruposTareas + 'editar/:idx', {
+//		  templateUrl: 'views/partials/GruposTareas/alta.html',
+//		  controller: 'GruposTareasCtrl',
+//		  mode: 'edit'
+//	  })
+//	  .when(gruposTareas + 'borrar/:idx', {
+//		  templateUrl: 'views/partials/GruposTareas/borrar.html',
+//		  controller: 'GruposTareasCtrl',
+//		  mode: 'delete'
+//	  })
+	  //items
+	  .when(itemSubpath, {
+		  templateUrl: 'views/partials/items/listado_ITEMS.html',
+		  controller: 'listadoItem'
+	  })
+	  .
+	  when(itemSubpath+"altas", {
+		  templateUrl: 'views/partials/items/alta_items.html',
+		  controller: 'altaItem'
+	  }).
+	  //GESTION TAREAS
+	  when(gesTareas,{
+		  templateUrl:'views/partials/GestionTareas/listado_tareas.html',
+		  controller:'listadoGesTareas'
+	  }).
+	  when(gesTareas+"editar",{
+		  templateUrl:'views/partials/GestionTareas/editar_tareas.html',
+		  controller:'listadoGesTareas'
+	  }).
+	  when(gesTareas+'alta',{
+		  templateUrl:'views/partials/GestionTareas/alta_tareas.html',
+		  controller:'altaGesTareas'
+	  })
+	  /* Gestion de Tamaños */
+	  .when(gesTamano,{
+		  templateUrl:'views/partials/Tamanos/listado.html',
+		  controller:'listadoGesTamanos'
+	  })
+	  .when(gesTamano+"editar/:id",{
+		  templateUrl:'views/partials/Tamanos/editar.html',
+		  controller:'editGesTamanos'
+	  })
+	  .when(gesTamano+'alta',{
+		  templateUrl:'views/partials/Tamanos/alta.html',
+		  controller:'altaGesTamanos'
+	  })
+	   /*Gestion de Roles*/
+	 .when(rolesSubpath+"listado_roles",{
+		  templateUrl:'views/partials/roles/listado_roles.html',
+		  controller:'RolCtrl'
+	  })
+	  .when(rolesSubpath+"alta",{
+		  templateUrl:'views/partials/roles/alta_roles.html',
+		  controller:'RolCtrl'
+	  })
+	  .when(rolesSubpath+"editar/:id",{
+		  templateUrl:'views/partials/roles/editar_roles.html',
+		  controller:'RolCtrl'
+	  })
+	   .otherwise({redirectTo:'/'})
+	  /* Gestion de Personas */
+	  .when(gesPersonas,{
+		  templateUrl:'views/partials/Gestion Personas/buscar-listado.html',
+		  controller:'listadoGesPersonas'
+	  })
+	  .when(gesPersonas+"editar/:id",{
+		  templateUrl:'views/partials/Gestion Personas/editar.html',
+		  controller:'editGesPersonas'
+	  })
+	  .when(gesPersonas+'alta',{
+		  templateUrl:'views/partials/Gestion Personas/alta.html',
+		  controller:'altaGesPersonas'
+	  })
+	  /* Gestion de proyectos */
+	  .when(proyectos,{
+		  templateUrl:'views/partials/proyectos/listado.html',
+		  controller:'listadoProyectos'
+	  }).
+	  when(proyectos+"alta",
+		{templateUrl:'views/partials/proyectos/alta.html',controller:'altaProyectos'}	  
+	  ).
+	  when(proyectos+'editar/:id',{templateUrl:'views/partials/proyectos/editar.html',controller:'editarProyectos'})
+	  .otherwise({redirectTo:'/'})
+  }]);

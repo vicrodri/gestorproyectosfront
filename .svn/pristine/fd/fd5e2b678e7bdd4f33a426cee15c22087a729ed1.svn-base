@@ -1,0 +1,77 @@
+// Grupos de tareas listado.
+.row
+    .col-lg-9.col-md-9.col-lg-offset-1.col-lg-offset-1
+        h1 Listado de grupos de tareas
+.row
+    form.form-horizontal
+        .col-lg-2.col-md-2.col-md-offset-1.col-lg-offset-1
+            label(for="gt-arquitectura") Arquitectura
+            select#gt-arquitectura.form-control(ng-model="comboModels.arquitectura", ng-options="arquitectura.nombre for arquitectura in combos.arquitecturas track by arquitectura.id" ng-change="combos.buscarItems()")
+                option(value="") Seleccione una opción
+        
+        .col-lg-2.col-md-2
+            label(for="gt-item") Ítem
+            select#gt-item.form-control(ng-model="comboModels.item", ng-options="item.nombre for item in combos.items track by item.id")
+                option(value="") Seleccione primero una arquitectura
+        
+        .col-lg-2.col-md-2
+            label(for="gt-complejidad") Complejidad
+            select#gt-complejidad.form-control(ng-model="comboModels.complejidad", ng-options="complejidad.descripcion for complejidad in combos.complejidades track by complejidad.id")
+                option(value="") Seleccione una opción
+        
+        .col-lg-2.col-md-2
+            label(for="gt-tamanios") Tamaños
+            select#gt-tamanios.form-control(ng-model="comboModels.tamanio", ng-options="tamanio.descripcion for tamanio in combos.tamanios track by tamanio.id")
+                option(value="") Seleccione una opción
+        
+        .col-lg-1.col-md-1
+            a.btn.btn-primary.gt-btn(ng-click="buscar()") Buscar
+            
+.gp-info(ng-hide="actionResult == ''", ng-bind-html="actionResult")
+
+// Resultado de la búsqueda
+.row(ng-show="mostrarTabla")
+    .col-lg-12.col-md-12
+        .panel.panel-default
+            .panel-heading Resultados de la búsqueda
+
+            .panel-body(ng-if="resultados == undefined")
+                p No se han encontrado resultados
+                p {{error}}
+        
+            table.table.table-striped(ng-if="resultados != undefined")
+                thead
+                    tr
+                        th Identificador
+                        th Nombre arquitectura
+                        th Nombre ítem
+                        th Complejidad
+                        th Tamaño
+                        th
+                        th
+                tbody
+                    tr(ng-repeat="row in resultados")
+                        td {{row.id}}
+                        td {{row.arquitectura.nombre}}
+                        td {{row.item.nombre}}
+                        td {{row.complejidad.descripcion}}
+                        td {{row.tamanio.descripcion}}
+                        td 
+                            a.btn.btn-warning(role="button", href="#/GruposTareas/editar/row.id") Editar
+                        td 
+                            a.btn.btn-danger(role="button", ng-click="borrar(row.id)") Borrar
+                            
+            // Diálogo de confirmación.
+            .modal.fade#deleteDialog(role="dialog")
+                .modal-dialog
+                    .modal-content
+                        .modal-header
+                            button.close(type="button", data-dismiss="modal")
+                                span &times;
+                            h4.modal-title Eliminar grupo de tareas
+                        .modal-body
+                            p Vas a eliminar el grupo. ¿Estás seguro?
+                            input(type="hidden", id="oculto")
+                        .modal-footer
+                            button.btn.btn-default(type="button", data-dismiss="modal") Cancelar
+                            button.btn.btn-danger(type="button", ng-click="confirmarBorrar()") Sí, bórralo

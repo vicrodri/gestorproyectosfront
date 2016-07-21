@@ -1,0 +1,21 @@
+.row
+ .col-lg-3.col-md-3
+ .col-lg-6.col-md-6
+  form(ng-submit="submit()")
+   fieldset.form-group
+    legend Editar Tecnologia
+   .form-group
+    label Nombre:
+    input.form-control(type='text', ng-model="editarTecnologia.nombre" required)
+   .form-group
+    label Lenguaje
+    input.form-control(type='text', ng-model="editarTecnologia.lenguaje" required)
+   .form-group
+    label Capa
+    input.form-control(type='text', ng-model="editarTecnologia.capa" required)
+   button.btn.btn-primary() Enviar
+   a.btn.btn-info(href='#/tecnologias/buscar-listado', role="button") Volver
+  h4 Arquitecturas asociadas:
+  ul(ng-repeat="arquitectura in editarTecnologia.arquitecturas")
+   li
+    {{arquitectura.nombre}}

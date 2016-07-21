@@ -1,0 +1,58 @@
+// Búsqueda de clientes
+.row
+    .col-lg-2.col-md-2
+    .col-lg-8.col-md-8
+        .input-group
+            input.form-control(type="search", placeholder="Buscar", ng-model="termino")
+            span.input-group-btn
+                button.btn.btn-primary(ng-click="buscar()")
+                    span.glyphicon.glyphicon-search
+    .col-lg-2.col-md-2
+        
+
+.gp-info(ng-hide="actionResult == ''", ng-bind-html="actionResult")
+
+// Resultado de la búsqueda
+.row(ng-show="mostrarTabla")
+    .col-lg-12.col-md-12
+        .panel.panel-default
+            .panel-heading Resultados de la búsqueda
+
+            .panel-body(ng-if="resultados == undefined")
+                p No se han encontrado resultados
+                p {{error}}
+        
+            table.table.table-striped(ng-if="resultados != undefined")
+                thead
+                    tr
+                        th Identificador
+                        th Nombre
+                        th Descripción
+                        th Arquitecturas
+                        th
+                        th
+                tbody
+                    tr(ng-repeat="row in resultados")
+                        td {{row.id}}
+                        td {{row.nombre}}
+                        td {{row.descripcion}}
+                        td {{row.arquitecturas.length}}
+                        td 
+                            a.btn.btn-warning(role="button", href="#/GruposTareas/editar/{{$index}}") Editar
+                        td 
+                            a.btn.btn-danger(role="button", ng-click="borrar($index)") Borrar
+                            
+            // Diálogo de confirmación.
+            .modal.fade#deleteDialog(role="dialog")
+                .modal-dialog
+                    .modal-content
+                        .modal-header
+                            button.close(type="button", data-dismiss="modal")
+                                span &times;
+                            h4.modal-title Eliminar cliente
+                        .modal-body
+                            p Vas a eliminar el cliente. ¿Estás seguro?
+                            input(type="hidden", id="oculto")
+                        .modal-footer
+                            button.btn.btn-default(type="button", data-dismiss="modal") Cancelar
+                            button.btn.btn-danger(type="button", ng-click="confirmarBorrar()") Sí, bórralo

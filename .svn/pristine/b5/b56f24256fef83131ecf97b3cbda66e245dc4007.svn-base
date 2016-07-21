@@ -1,0 +1,50 @@
+[
+ {
+	 "identificador": "1",
+	 "nombre": "BBVA",
+	 "descripcion": "Banco de color azul",
+	 "arquitecturas": "3"
+ },
+ {
+	 "identificador": "2",
+	 "nombre": "Santander",
+	 "descripcion": "Banco de color rojo",
+	 "arquitecturas": "7"
+ },
+ {
+	 "identificador": "3",
+	 "nombre": "Aluminios Manolo",
+	 "descripcion": "Aluminios de mucha calidad",
+	 "arquitecturas": "6"
+ },
+ {
+	 "identificador": "4",
+	 "nombre": "Demoliciones Dentellada",
+	 "descripcion": "Lo tiran todo abajo",
+	 "arquitecturas": "2"
+ },
+ {
+	 "identificador": "5",
+	 "nombre": "Refractarios Inferno",
+	 "descripcion": "Aguantan más el calor",
+	 "arquitecturas": "3"
+ },
+ {
+	 "identificador": "6",
+	 "nombre": "Restaurante Rorista",
+	 "descripcion": "Una explosión de sabores",
+	 "arquitecturas": "1"
+ },
+ {
+	 "identificador": "7",
+	 "nombre": "Extintores El Bombero",
+	 "descripcion": "Sólo faltábamos nosotros",
+	 "arquitecturas": "9"
+ },
+ {
+	 "identificador": "8",
+	 "nombre": "Bomberos unidos",
+	 "descripcion": "Gente con grandes ideas",
+	 "arquitecturas": "7"
+ }
+]

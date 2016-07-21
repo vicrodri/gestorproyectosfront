@@ -1,0 +1,80 @@
+'use strict';
+
+app.controller("listaTec",listadoTecnologias);
+app.controller("altaTec",altaTecnologias);
+app.controller("editarTec",editarTecnologias);
+
+
+//Muestra el listado de todas las tecnologias
+function listadoTecnologias($scope, $http,request) {
+	$scope.buscar={'nombre':'','lenguaje':'','capa':''};
+	$scope.listar=function(){
+		console.log("listar tecnologias");
+		request.getTecnologias($scope.buscar)
+		.then(function(res){
+			console.log($scope.buscar);
+			$scope.tecnologias = res.data;
+			/* Se muestra la tabla de resultados */
+			$scope.mostrarTabla = true;
+		});
+	}
+	
+	
+	//borrar tecnologia
+	$scope.confirmarBorrado=function(tecnologia){
+		$scope.Btecnologia=tecnologia;
+		$('#deleteDialog').modal();
+	}
+	$scope.borrarTecnologia = function(){
+		console.log("borrar");
+		request.deleteTecnologia($scope.Btecnologia)
+		.then(function successCallback(response) {
+			console.log(response.data);
+			$scope.listar();
+		}
+		,function errorCallback(response){
+			$("#errorDialog").modal();
+			$scope.listar();
+		});
+		$('#deleteDialog').modal('hide');
+		delete $scope.Btecnologia;
+	};
+};
+  
+
+
+//Dar de alta una nueva tecnologia
+function altaTecnologias($scope, $http,$location,request){
+	console.log("alta tecnologia");
+	$scope.altaTec={};
+	$scope.submit=function(){
+	
+		request.altaTecnologia($scope.altaTec)
+		.then(function successCallback(response) {
+			$location.path("/tecnologias/buscar-listado/");
+		});
+	}
+}
+
+
+
+//edita tecnologias
+function editarTecnologias($scope, $http,$routeParams,$location,request){
+
+		var id=$routeParams.id;
+		console.log("editar tecnologia");
+		request.getTecnologias({'id':id})
+		.then(function(res){
+			$scope.editarTecnologia=res.data[0];
+		});
+
+	$scope.submit=function(){
+		
+		console.log($scope.editarTecnologia);
+	
+		request.putTecnologia($scope.editarTecnologia)
+		.then(function successCallback(response) {
+			$location.path("/tecnologias/buscar-listado/");
+		});
+	}
+}

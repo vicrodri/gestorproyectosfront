@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html ng-app="frontApp">
+  <head>
+    <title>Un título que pongo aquí</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <header class="container">
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <ul class="nav navbar-nav">
+            <li><a href="#/">Home</a></li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Clientes</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/clientes/">Buscador</a></li>
+                <li><a href="#/clientes/alta">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Tecnologías</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/tecnologias/buscar-listado">Buscador</a></li>
+                <li><a href="#/tecnologias/alta">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Arquitecturas</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/arq/">Buscador</a></li>
+                <li><a href="#/arq/altas">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Ítems</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/items/">Buscador</a></li>
+                <li><a href="#/items/altas">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Complejidades</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/complejidades/">Listado</a></li>
+                <li><a href="#/complejidades/alta">Alta       </a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Gestion de Tareas</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/GesTareas/">Buscador</a></li>
+                <li><a href="#/GesTareas/alta">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Gestion de Tamaños</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/tamano/">Listado</a></li>
+                <li><a href="#/tamano/alta">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Gestion de Grupos Tareas</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/GruposTareas/">Listado</a></li>
+                <li><a href="#/GruposTareas/alta">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Gestion de Roles</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/roles/listado_roles">Listado</a></li>
+                <li><a href="#/roles/alta">Alta            </a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Gestion de Personas</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/GesPersonas/">Listado</a></li>
+                <li><a href="#/GesPersonas/alta">Alta</a></li>
+              </ul>
+            </li>
+            <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle">Gestion de proyectos</a>
+              <ul class="dropdown-menu">
+                <li><a href="#/proyectos/">Listado</a></li>
+                <li><a href="#/proyectos/alta">Alta</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div ng-view class="container"></div>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../bower_components/angular-touch/angular-touch.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="scripts/app.js"></script>
+    <!--script(src="scripts/general/requests.js")-->
+    <script src="scripts/JSONRequestDispatcher.js"></script>
+    <script src="scripts/controllers/itemsControllers.js"></script>
+    <script src="scripts/controllers/gruposTareas.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/client.js"></script>
+    <script src="scripts/controllers/tecnologias.js"></script>
+    <script src="scripts/controllers/controllersARQ.js"></script>
+    <script src="scripts/controllers/GestionTareasControllers.js"></script>
+    <script src="scripts/controllers/GesTamanosControler.js"></script>
+    <script src="scripts/controllers/GesPersonasControler.js"></script>
+    <script src="scripts/controllers/complejidades.js"></script>
+    <script src="scripts/controllers/client.js"></script>
+    <!--script(src="scripts/controllers/grupoTareas.js")-->
+    <script src="scripts/arquitecturasApp.js"></script>
+    <script src="scripts/itemsApp.js"></script>
+    <script src="scripts/GesTareas.js"></script>
+    <!--script(src="scripts/GruposTareas.js")-->
+    <script src="scripts/controllers/roles.js"></script>
+    <script src="scripts/GesPersonasApp.js"></script>
+    <script src="scripts/controllers/proyectosControllers.js"></script>
+  </body>
+</html>

@@ -1,0 +1,91 @@
+'use strict';
+//Muestra el listado de todos los tamaños
+function listadoTamanos($scope, $http) {
+	//funcion para listar tamaños
+	$scope.tamanos={};
+	
+		$scope.listar=function(){
+			console.log("listar Tamaños");
+			$http.get('/api/tecnologia/obtenerTecnologias')
+			.then(function(res){
+				console.log($scope.tamanos);
+				$scope.tamanos = res.data;
+				console.log($scope.tamanos);
+			});
+		}
+	
+	$scope.listar();
+	console.log("hola mundo");
+	
+	//borrar tecnologia
+	$scope.confirmarBorrado=function(tamano){
+		$scope.Btamano=tamano;
+		$('#deleteDialog').modal();
+	}
+	$scope.borrarTamano = function(){
+		console.log("borrar");
+		var req = {
+				method: 'DELETE',
+				url: '/api/tecnologia/eliminarTecnologia',
+				data:$scope.Btamano,
+				headers:{'Content-Type': 'application/json'}
+		}
+		$http(req)
+		.then(function successCallback(response) {
+			console.log(response.data);
+			$scope.listar();
+		}
+		,function errorCallback(response){
+			$("#errorDialog").modal();
+			$scope.listar();
+		});
+		$('#deleteDialog').modal('hide');
+	};
+}
+  
+
+//Dar de alta una nueva tecnologia
+function altaTamanos($scope, $http,$location){
+	console.log("alta Gestion tamaños");
+	$scope.altaTam={};
+	$scope.submit=function(){
+		var req = {
+				method: 'POST',
+				url: '/api/tecnologia/crearTecnologia',
+				data:$scope.altaTam,
+				headers:{'Content-Type': 'application/json'}
+		}
+		$http(req)
+		.then(function successCallback(response) {
+			$location.path("/tamanos/buscar-listado/");
+		});
+	}
+}
+
+
+
+//edita tecnologias
+function editarTamanos($scope, $http,$routeParams,$location){
+
+		var id=$routeParams.id;
+		console.log("editar tamaño");
+		$http.get('/api/tecnologia/obtenerTecnologias?id='+id)
+		.then(function(res){
+			$scope.editarTamano=res.data[0];
+		});
+
+	$scope.submit=function(){
+		
+		console.log($scope.editarTamano);
+		var req = {
+				method: 'PUT',
+				url: '/api/tecnologia/actualizarTecnologia',
+				data:$scope.editarTamano,
+				headers:{'Content-Type': 'application/json'}
+		}
+		$http(req)
+		.then(function successCallback(response) {
+			$location.path("/tamanos/buscar-listado/");
+		});
+	}
+}

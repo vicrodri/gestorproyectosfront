@@ -1,0 +1,247 @@
+/**
+ * 
+ */
+
+'use strict';
+function state()
+{
+	return{
+
+
+	}
+
+}
+function listadoArquitecturas($scope,State,$location,$http)
+{
+	$scope.sizeValues=[5,10,15,20];
+	$scope.currPage=1;
+	$scope.size=5;
+	$scope.slice=function()
+	{
+
+		var inicio=$scope.size*($scope.currPage-1);
+		var  fin=inicio+$scope.size;
+		var par={};
+		par.start=inicio;
+		par.end=fin;
+		console.log(par);
+		return par;
+
+	};
+
+
+	$scope.clip = function(number, min, max) {
+		return Math.max(min, Math.min(number, max));
+
+
+	};
+
+	$scope.ceil=function()
+	{
+		
+		var output=Math.ceil(($scope.arquitecturas.length)/$scope.size);
+		console.log(output);
+		return output;
+	};
+	$scope.adelante=function()
+	{
+		$scope.currPage=$scope.clip($scope.currPage+1,1,$scope.ceil());
+	};
+	$scope.atras=function()
+	{
+		$scope.currPage=$scope.clip($scope.currPage-1,1,$scope.ceil());
+	};
+
+	$scope.arquitecturas;
+	$scope.opciones;
+	$scope.clientes;
+	$scope.listar=function()
+	{
+		$scope.mostrar=true;
+		var query=" ";
+
+		if($scope.cBusqueda!=undefined)
+			{
+				query+=" cliente.id="+$scope.cBusqueda.id;
+			}
+		if($scope.arquitecturaActual!=undefined&&$scope.arquitecturaActual.length>0)
+			{
+				query+=" nombre="+$scope.arquitecturaActual;
+			}
+		query=query.trim();
+		query=query.replace(/ /g,"&");
+		$http.get("/api/arquitectura/obtenerArq?"+query).then(function successCallback(response) {
+
+			$scope.arquitecturas=response.data;
+
+
+		}, function errorCallback(response) {
+			console.log("error");
+		});
+
+
+	};
+	$scope.borrar=function(id)
+	{
+
+		$("#deleteDialog").modal();
+		$scope.idBorrar=id;
+	}
+	$scope.confirmarBorrar=function()
+	{
+		$("#deleteDialog").modal('hide');
+		var id=$scope.idBorrar;
+		var req = {
+				method: 'DELETE',
+				url: '/api/arquitectura/eliminarArq',
+		data:{'id':id}
+
+		};
+
+		$http(req).then(function successCallback(response) {
+
+			$scope.listar();
+
+		}, function errorCallback(response) {
+			$("#errorDialog").modal();
+			$scope.listar();
+		});
+
+		delete $scope.idBorrar;
+	};
+
+	$scope.editar=function(id)
+	{
+
+		$location.path("/arq/editar/"+id);
+
+	};
+	$scope.cosa;
+	$scope.loadClientes=function()
+	{
+		$http.get("/api/cliente/obtenerClientes").then(function successCallback(response) {
+			$scope.clientes=response.data;
+		}, function errorCallback(response) {
+			console.log("error");
+		});
+		
+	};
+	$scope.loadClientes();
+
+
+}
+
+function altaArquitecturas($scope,$http,State)
+{
+	$scope.clientes;
+	$scope.alta={};
+	$scope.submit=
+		function()
+		{
+
+	
+		var req = {
+				method: 'POST',
+				url: '/api/arquitectura/crearArq',
+				//url: '/api/arquitectura/crearArq?cliente.id='+$scope.alta.client.id+"&nombre="+$scope.alta.nombre+i,
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				data:$scope.alta
+
+		};
+		$http(req).then(function successCallback(response) {
+		}, function errorCallback(response) {
+			console.log("error");
+		});
+
+			};
+
+		$scope.getClientes=function()
+		{
+			$http.get('/api/cliente/obtenerClientes').then(function successCallback(response) {
+
+				$scope.clientes=response.data;
+				$scope.alta.cliente=$scope.clientes[0];
+
+			}, function errorCallback(response) {
+				console.log("error");
+			});
+			
+		};
+
+
+	
+		$scope.getClientes();
+}
+function editarArquitecturas($scope,$http,$routeParams,$timeout,$location)
+{
+	$scope.edit={};
+	$scope.confirmar=function()
+	{
+		$("#confirmDialog").modal();
+	};
+	$scope.submit=function(form)
+	{
+		console.log($scope.cliente);
+		$("#confirmDialog").modal('hide');
+		var req = {
+				method: 'PUT',
+				//url: '/api/arquitectura/actualizarArq?id='+$scope.edit.id+'&nombre='+$scope.edit.nombre+'&cliente.id='+$scope.edit.cliente.id,
+				url: '/api/arquitectura/actualizarArq',
+				data:$scope.edit
+
+
+		};
+
+		$http(req).then(function successCallback(response) {
+
+			console.log(response.data);
+			$("#okDialog").modal();
+		}, function errorCallback(response) {
+			$("#errorDialog").modal();
+		});
+
+
+	};
+	$scope.salir=function()
+	{
+		//hay un bug en angular-ui, no borrar el backdrop
+		$('.modal-backdrop').remove();
+		$location.path("/arq/");
+
+	}
+	$scope.recuperar=function()
+	{
+		var id=$routeParams.id;
+		console.log(id);
+		$http.get('/api/cliente/obtenerClientes').then(function(res){$scope.clientes=res.data;
+		console.log(res.data);
+		});
+		$http.get("api/arquitectura/obtenerArq").then(function successCallback(response) {
+
+			var aux;
+			angular.forEach(response.data,function (value,key)
+					{
+				if(value.id==id)
+				{
+					$scope.edit=value;
+					console.log("cliente inicial:"+$scope.edit.cliente.nombre);
+			
+
+					}		
+					}
+			);
+
+		}, function errorCallback(response) {
+			console.log("error");
+
+		});
+		
+
+	};
+	$scope.recuperar();
+	
+	console.log("cargado completo");
+
+}

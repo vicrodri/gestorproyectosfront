@@ -1,0 +1,47 @@
+.row
+ .col-lg-10.col-md-10
+  .panel.panel-default 
+   table.table.table-striped
+    thead
+     tr
+      th Identificador
+      th Nombre
+      th 
+      th 
+    tbody
+     tr(ng-repeat="tamano in tamanos")
+      td
+       {{tamano.id}}
+      td
+       {{tamano.descripcion}}
+      td
+       a.btn.btn-warning(role="button", href="#/tamano/editar/{{tamano.id}}") Editar
+      td
+       a.btn.btn-danger(role="button", ng-click="confirmarBorrado(tamano)") Borrar
+      
+  .modal.fade#deleteDialog(role="dialog")
+   .modal-dialog
+    .modal-content
+     .modal-header
+      button.close(type="button", data-dismiss="modal")
+       span &times;
+      h4.modal-title Eliminar Gestion de Tamaño
+     .modal-body
+      p Vas a eliminar la Gestion de Tamaño: 
+       b {{Btamano.descripcion}} 
+       ¿Estás seguro?
+     .modal-footer
+      button.btn.btn-default(type="button", data-dismiss="modal") Cancelar
+      button.btn.btn-danger(type="button", ng-click="borrarTamano()") Sí, bórralo
+     
+  .modal.fade#errorDialog(role="dialog")
+   .modal-dialog
+    .modal-content
+     .modal-header
+      button.close(type="button",data-dismiss="modal")
+       spam&times;
+      h4.modal-title Error en la operación
+      .modal-body
+       p No se ha podido eliminar la Gestion de Tamaño.
+      .modal-footer
+       button.btn.btn-default(type="button",data-dismiss="modal") Salir

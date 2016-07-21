@@ -1,0 +1,89 @@
+'use strict';
+app.controller("listaRolCtrl",listadoRoles);
+app.controller("altaRolCtrl",altaRoles);
+app.controller("editarRolCtrl",editarRoles);
+
+/*MUESTRA LISTADO*/
+function listadoRoles($scope, $http,request,$location) {
+	$scope.buscar={};
+	$scope.listar=function(){
+		console.log("listar roles");
+		request.getRoles($scope.buscar)
+		.then(function(res){
+			
+			$scope.roles = res.data;
+			console.log($scope.roles);
+		});
+	}
+	
+	$scope.listar();
+	
+	
+	
+	
+/*BORRAR*/
+	$scope.confirmarBorrado=function(rol){
+		$scope.Rol=rol;
+		$('#deleteDialog').modal();
+	}
+	$scope.borrarRol = function(){
+		console.log("borrar");
+		request.deleteRol($scope.Rol)
+		.then(function successCallback(response) {
+			console.log(response.data);
+			$scope.listar();
+		}
+		,function errorCallback(response){
+			$("#errorDialog").modal();
+			$scope.listar();
+		});
+		$('#deleteDialog').modal('hide');
+		delete $scope.Rol;
+	};
+	$scope.editar=function(id)
+	{
+		
+		$location.path("/roles/editar/"+id)
+	};
+};
+  
+
+
+/*DAR DE ALTA*/
+function altaRoles($scope, $http,$location,request){
+	console.log("alta rol");
+	$scope.altaRolCtrl={};
+	$scope.submit=function(){
+	
+		request.altaRol($scope.altaRolCtrl)
+		.then(function successCallback(response) {
+			$location.path("/roles/listado_roles/");
+			console.log("ok");
+		}, function errorCallback(response) {
+			console.log("error");
+	
+		});
+	}
+}
+
+
+
+/*EDITAR*/
+function editarRoles($scope, $http,$routeParams,$location,request){
+    var id=$routeParams.id;
+	console.log("editar rol "+id);
+	request.getRoles({'id':id})
+	.then(function(res){
+		$scope.editarRol=res.data[0];
+	});
+
+$scope.submit=function(){
+	
+	console.log($scope.editarRol);
+
+	request.putRol($scope.editarRol)
+	.then(function successCallback(response) {
+		$location.path("/roles/listado_roles/");
+	});
+}
+}

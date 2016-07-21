@@ -1,0 +1,58 @@
+$icon-font-path: "../bower_components/bootstrap-sass-official/assets/fonts/bootstrap/";
+// bower:scss
+@import "../../bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap.scss";
+// endbower
+
+/* Cursor para los a sin href */
+a{
+    cursor: pointer;
+}
+
+/* Activación de submenú en :hover */
+.dropdown:hover{
+    background: #e7e7e7;
+    color: #555;
+    
+    .dropdown-menu{
+        display: block;
+    }
+}
+
+.jumbotron{
+  h1{
+    text-align: center;
+  }
+}
+
+.index-container{
+  h2{
+    font-size: 2em;
+    text-align: center;
+  }
+}
+.panel{
+    margin-top: 20px;
+}
+form{
+    a.btn{
+        margin-left: 1em;
+    }
+}
+.gp-info{
+    margin-top: 20px;
+}
+
+
+.gt-btn{
+	margin-top: 25px;
+	margin-left: 0 !important;
+}
+
+.row {
+	h1{
+		font-size: 1.5em;
+		border-bottom: 1px solid #333;
+		margin-bottom: 1em;
+		padding-bottom: .5em;
+    }
+}

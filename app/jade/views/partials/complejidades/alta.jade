@@ -1,0 +1,19 @@
+.gp-info(ng-show="actionResult.status != ''")
+    .alert.alert-success(ng-show="actionResult.status == 'ok'")
+        p {{actionResult.okMsg}}
+    .alert.alert-danger(ng-show="actionResult.status == 'ko'")
+        p {{actionResult.koMsg}}
+        p Error {{actionResult.errorCode}}: {{actionResult.errorMsg}}
+
+.row
+    .col-lg-6.col-md-6.col-lg-offset-3.col-md-offset-3
+        form(name="newForm")
+            fieldset.form-group
+                legend {{newLegend}}
+                
+                .form-group
+                    label(for="descripcion") Descripción
+                    input.form-control(type="text", id="descripcion", required, ng-model="item.descripcion")
+                
+                button.btn.btn-primary(ng-click="(mode == 'edit') ? editar() : alta()" ng-disabled="newForm.$invalid") Enviar
+                a.btn.btn-info(href='#/complejidades', role="button") Volver

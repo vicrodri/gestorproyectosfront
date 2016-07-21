@@ -1,0 +1,14 @@
+form(name="formAlta",ng-submit="submit();this.$setpristine()")
+	label
+		|Nombre:
+	br
+	input(type="text",name="altaNombre",ng-model="data.nombre" required)
+	div(ng-show="formAlta.altaNombre.$touched&&formAlta.altaNombre.$invalid")
+		|El nombre es requerido
+	br
+	label
+		|Cliente:
+	select(name="seleccionClienteAlta",ng-Model="data.cliente",ng-options="cliente.descripcion for cliente in clientes" required)
+		|El nombre es requerido
+	input(type="submit", value="Enviar")
+		

@@ -1,0 +1,162 @@
+
+function listadoItem($scope,$http)
+{
+	$scope.sizeValues=[5,10,15];
+	$scope.currPage=1;
+	$scope.size=5;
+	$scope.slice=function()
+	{
+
+		var inicio=$scope.size*($scope.currPage-1);
+		var  fin=inicio+$scope.size;
+		var par={};
+		par.start=inicio;
+		par.end=fin;
+		console.log(par);
+		return par;
+
+	};
+	$scope.clip = function(number, min, max) {
+		return Math.max(min, Math.min(number, max)); };
+		$scope.ceil=function()
+		{
+			console.log("arquitecturas length "+$scope.arquitecturas.length);
+			var output=Math.ceil(($scope.items.length)/$scope.size);
+			console.log("pag:"+output);
+			return output;
+		};
+		$scope.adelante=function()
+		{
+			$scope.currPage=$scope.clip($scope.currPage+1,1,$scope.ceil());
+		};
+		$scope.atras=function()
+		{
+			$scope.currPage=$scope.clip($scope.currPage-1,1,$scope.ceil());
+		};
+		$scope.listar=function()
+		{
+			$http.get("/api/item/obtenerItems").then(function successCallback(response) {
+
+				console.log(response.data);
+				$scope.items=response.data;
+
+			}, function errorCallback(response) {
+				console.log("error");
+			});
+
+			$http.get("/api/arquitectura/obtenerArq").then(function successCallback(response) {
+
+				console.log(response.data);
+				$scope.arquitecturas=response.data;
+
+
+				console.log("arquitecturas cargadas:"+$scope.arquitecturas.length);
+			}, function errorCallback(response) {
+				console.log("error");
+			});
+
+		};
+		$scope.splitArray= function(array,property)
+		{
+			var myString='';
+			for(var i=0;i<array.length;i++)
+			{
+				myString+=' '+array[i][property];
+			}
+
+			myString=myString.trim();
+			myString=myString.replace(/ /g,',');
+			return myString;
+
+		};
+		$scope.listar();
+}
+function altaItem($scope,$http)
+{
+	console.log("recuperando arquitecturas");
+	$scope.altaItem={'nombre':'','arquitectura':{},'tecnologias':[]};
+	
+	$scope.recuperar= function()
+	{
+		$http.get("/api/arquitectura/obtenerArq").then(function successCallback(response) {
+
+			$scope.arquitecturas=response.data;
+
+			$scope.altaItem.arquitectura=response.data[0];
+			$scope.getTecnologias();
+		}, function errorCallback(response) {
+			console.log("error");
+		});
+	};
+	$scope.toggle=function(tec)
+	{
+	
+	var pos=$scope.indexOf($scope.altaItem.tecnologias,"id",tec.id);
+	console.log($scope.altaItem.tecnologias);
+	console.log(pos);
+		if(pos>-1)
+			{
+			console.log("agregando");
+			$scope.altaItem.tecnologias.splice(pos,1);
+			}
+		else
+			
+		$scope.altaItem.tecnologias.push(tec);
+	};
+	$scope.indexOf=function(array,property,value)
+	{
+		console.log(property+" "+value);
+		for(var i=0;i<array.length;i++)
+			{
+				if(array[i][property]==value)
+					return i;
+				
+			}
+		return -1;
+	}
+	$scope.submit=function()
+	{
+		var altaItem=$scope.altaItem;
+		var req = {
+				method: 'POST',
+				url:'/api/item/crearItem',
+				//url: '/api/item/crearItem?nombre='+altaItem.nombre+'&descripcion='+altaItem.descripcion+'&arquitectura.id='+altaItem.arquitectura.id,
+				data:altaItem
+		};
+		$http(req).then(function successCallback(response) {
+
+			console.log(response.data);
+		}, function errorCallback(response) {
+			console.log("error");
+		});
+
+	};
+	$scope.getTecnologias=function()
+	{
+		//var url="/api/tecnologia/obtenerTecnologias?arquitecturas.nombre=ARQOS"
+		var url="/api/tecnologia/getTecnologiasArquitectura?id="+$scope.altaItem.arquitectura.id;
+		$http.get(url).then(function (response)
+				{
+					$scope.tecnologiaArquitectura=response.data;
+				}
+				
+		);
+	};
+	$scope.recuperar();
+	
+	
+}
+
+function filtroArq(arquitecturas,param)
+{
+	if(arquitecturas==undefined)return [];
+	var aux=[];
+	
+	for(var i=0;i<arquitecturas.length;i++)
+	{
+		var arq=arquitecturas[i];
+		if(param==undefined||arq.arquitectura.id==param.id)
+			aux.push(arq);
+	}
+	return aux;
+}

@@ -1,0 +1,199 @@
+'use strict';
+function listadoGruposTareas($scope,$location,$http,request)
+{
+	$scope.sizeValues=[5,10,15,20];
+	$scope.currPage=1;
+	$scope.size=5;
+	$scope.buscar={};
+	$scope.slice=function()
+	{
+
+		var inicio=$scope.size*($scope.currPage-1);
+		var  fin=inicio+$scope.size;
+		var par={};
+		par.start=inicio;
+		par.end=fin;
+		console.log(par);
+		return par;
+
+	};
+
+
+	$scope.clip = function(number, min, max) {
+		return Math.max(min, Math.min(number, max));
+
+
+	};
+
+	$scope.ceil=function()
+	{
+		
+		var output=Math.ceil(($scope.arquitecturas.length)/$scope.size);
+		console.log(output);
+		return output;
+	};
+	$scope.adelante=function()
+	{
+		$scope.currPage=$scope.clip($scope.currPage+1,1,$scope.ceil());
+	};
+	$scope.atras=function()
+	{
+		$scope.currPage=$scope.clip($scope.currPage-1,1,$scope.ceil());
+	};
+	$scope.cargarDatos=function()
+	{
+		request.getComplejidades({}).then(function successCallback(response) {
+			$scope.complejidades=response.data;
+		
+
+		}, function errorCallback(response) {
+			console.log("error");
+		
+		});
+		request.getTamanios({}).then(function successCallback(response) {
+
+			$scope.tamanios=response.data;
+		}, function errorCallback(response) {
+			console.log("error al recuperar datos");
+		});
+		request.getArquitecturas({}).then(function successCallback(response) {
+
+			$scope.arquitecturas=response.data;
+		}, function errorCallback(response) {
+			console.log("error al recuperar datos");
+		});
+	};
+	$scope.loadItems=function()
+	{
+		console.log($scope.buscar.arquitectura);
+		var filter={};
+		filter.arquitectura= $scope.buscar.arquitectura;
+		request.getItems(filter).then(function successCallback(response) {
+
+			$scope.items=response.data;
+			
+		}, function errorCallback(response) {
+			console.log("error al recuperar datos");
+		});
+	};
+	$scope.listar=function()
+	{	
+		$scope.buscar.items=$scope.buscar.item;
+		request.getGruposTareas($scope.buscar).then(function successCallback(response) {
+
+			$scope.resultados=response.data;
+			$scope.mostrarTabla=true;
+		}, function errorCallback(response) {
+			console.log("error al recuperar datos");
+		});
+	
+
+	};
+	$scope.borrar=function(id)
+	{
+
+		$("#deleteDialog").modal();
+		$scope.idBorrar=id;
+	}
+	$scope.confirmarBorrar=function()
+	{
+		$("#deleteDialog").modal('hide');
+		var id=$scope.idBorrar;
+		request.deleteArq(id).then(function successCallback(response) {
+
+			$scope.listar();
+
+		}, function errorCallback(response) {
+			$("#errorDialog").modal();
+			$scope.listar();
+		});
+
+		delete $scope.idBorrar;
+	};
+
+	$scope.editar=function(id)
+	{
+
+		$location.path("/GruposTareas/editar/"+id);
+
+	};
+	$scope.cargarDatos();
+}
+
+//function altaArquitecturas($scope,$http,State,request)
+//{
+//	$scope.clientes;
+//	$scope.alta={};
+//	$scope.submit=
+//		function()
+//		{
+//		request.altaArq($scope.alta).then(function successCallback(response) {
+//		}, function errorCallback(response) {
+//			console.log("error");
+//		});
+//
+//			};
+//
+//		$scope.getClientes=function()
+//		{
+//			request.getClientesCombo().then(function successCallback(response) {
+//
+//				$scope.clientes=response.data;
+//				$scope.alta.cliente=$scope.clientes[0];
+//
+//			}, function errorCallback(response) {
+//				console.log("error");
+//			});
+//			
+//		};
+//
+//
+//	
+//		$scope.getClientes();
+//}
+//function editarArquitecturas($scope,$http,$routeParams,$timeout,$location,request)
+//{
+//	$scope.edit={};
+//	$scope.confirmar=function()
+//	{
+//		$("#confirmDialog").modal();
+//	};
+//	$scope.submit=function(form)
+//	{
+//		console.log($scope.cliente);
+//		$("#confirmDialog").modal('hide');
+//	request.putArquitecturas($scope.edit).then(function successCallback(response) {
+//
+//			console.log(response.data);
+//			$("#okDialog").modal();
+//		}, function errorCallback(response) {
+//			$("#errorDialog").modal();
+//		});
+//
+//
+//	};
+//	$scope.salir=function()
+//	{
+//		//hay un bug en angular-ui, no borrar el backdrop
+//		$('.modal-backdrop').remove();
+//		$location.path("/arq/");
+//	}
+//	$scope.recuperar=function()
+//	{
+//		var id=$routeParams.id;
+//		console.log(id);
+//		request.getClientesCombo().then(function(res){$scope.clientes=res.data;
+//		console.log(res.data);
+//		});
+//		request.getArquitecturas({'id':id}).then(function success(req)
+//		{
+//			console.log(req.data);
+//			$scope.edit=req.data[0];
+//		}
+//		);
+//	};
+//	$scope.recuperar();
+//	
+//	console.log("cargado completo");
+//
+//}

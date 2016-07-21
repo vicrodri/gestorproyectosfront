@@ -1,0 +1,13 @@
+doctype html
+html(ng-app="frontApp")
+	head
+		title Un título que pongo aquí
+		link(rel="stylesheet", href="styles/main.css")
+		meta(charset="UTF-8")
+	body
+		header.container
+			include ./views/partials/menu
+		
+		div.container(ng-view)
+		include ./views/partials/scripts
+		

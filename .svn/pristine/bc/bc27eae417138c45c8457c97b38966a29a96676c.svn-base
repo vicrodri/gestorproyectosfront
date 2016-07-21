@@ -1,0 +1,60 @@
+.gp-info(ng-show="actionResult.status != ''")
+    .alert.alert-success(ng-show="actionResult.status == 'ok'")
+        p {{actionResult.okMsg}}
+    .alert.alert-danger(ng-show="actionResult.status == 'ko'")
+        p {{actionResult.koMsg}}
+        p Error {{actionResult.errorCode}}: {{actionResult.errorMsg}}
+
+.row
+    .col-lg-6.col-md-6.col-lg-offset-3.col-md-offset-3
+        form(name="newForm")
+            fieldset.form-group
+                legend {{newLegend}}
+                
+                label(for="ga-cliente") Cliente
+                select#ga-cliente.form-control(ng-model="asModels.proyecto.cliente"
+                ng-options="cliente.nombre for cliente in combos.clientes track by cliente.id"
+                ng-change="combos.buscarProyectos()")
+                    option(value="") Seleccione una opción
+                
+                .form-group
+                    label(for="ga-proyecto") Proyecto
+                    select#ga-proyecto.form-control(ng-model="asModels.proyecto"
+                    ng-options="proyecto.nombre for proyecto in combos.proyectos track by proyecto.id"
+                    required)
+                        option(value="") {{proyectosFirstOpt}}
+
+                .form-group
+                    label(for="ga-persona") Persona
+                    select#ga-persona.form-control(ng-model="asModels.persona"
+                    ng-options="persona.nombre + ' ' + persona.primerApellido + ' ' + persona.segundoApellido for persona in combos.personas track by persona.id"
+                    required)
+                        option(value="") Seleccione una opción
+        
+                .form-group
+                    label(for="ga-roles") Rol
+                    select#ga-roles.form-control(ng-model="asModels.rol"
+                    ng-options="rol.nombre for rol in combos.roles track by rol.id"
+                    required)
+                        option(value="") Seleccione una opción
+        
+                .form-group
+                    label(for="ga-fInicio") Fecha de inicio
+                    .input-group
+                        input#ga-fInicio.form-control(type="text", uib-datepicker-popup="{{dateFormat}}"
+                        ng-model="date.fInicio", is-open="calendarIsOpen.inicio", readonly, required, ng-change="formatDate()")
+                        span.input-group-btn
+                            button.btn.btn-default(type="button", ng-click="openCalendar('i')")
+                                span.glyphicon.glyphicon-calendar
+                
+                .form-group
+                    label(for="ga-fFin") Fecha de finalización
+                    .input-group
+                        input#ga-fFin.form-control(type="text", uib-datepicker-popup="{{dateFormat}}"
+                        ng-model="date.fFin", is-open="calendarIsOpen.fin", readonly, ng-change="formatDate()")
+                        span.input-group-btn
+                            button.btn.btn-default(type="button", ng-click="openCalendar('f')")
+                                span.glyphicon.glyphicon-calendar
+                                 
+                button.btn.btn-primary(ng-click="(mode == 'edit') ? editar() : alta()" ng-disabled="newForm.$invalid") Enviar
+                a.btn.btn-info(href='#/asignaciones', role="button") Volver

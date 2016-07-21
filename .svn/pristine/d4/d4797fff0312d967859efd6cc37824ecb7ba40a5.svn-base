@@ -1,0 +1,60 @@
+function listadoGesTareas($scope,$http)
+{
+	
+	
+}
+function altaGesTareas($scope,$http,request)
+{
+	$scope.arquitecturas;
+	$scope.tamanios;
+	$scope.items;
+	$scope.complejidades;
+	
+	$scope.getArquitecturas=function()
+	{
+
+		request.getArquitecturas({}).then(function successCallback(response) {
+
+			$scope.arquitecturas=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	
+	$scope.getTamanios=function()
+	{
+
+		request.getTamanios({}).then(function successCallback(response) {
+
+			$scope.tamanios=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	$scope.getItems=function()
+	{
+	
+
+		request.getItems({}).then(function successCallback(response) {
+
+			$scope.items=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	$scope.getComplejidades=function()
+	{
+		request.getComplejidades().then(function successCallback(response) {
+
+			$scope.complejidades=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	$scope.submit=function()
+	{
+		
+		$http.post("/api/");
+	};
+	
+	$scope.getArquitecturas();
+	$scope.getTamanios();
+	$scope.getComplejidades();
+	$scope.getItems();
+}

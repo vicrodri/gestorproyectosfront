@@ -1,0 +1,43 @@
+.gp-info(ng-hide="actionResult == ''", ng-bind-html="actionResult")
+    
+
+// Resultado de la búsqueda
+.row(ng-show="mostrarTabla")
+    .col-lg-12.col-md-12
+        .panel.panel-default
+            .panel-heading Resultados de la búsqueda
+
+            .panel-body(ng-if="resultados == undefined")
+                p No se han encontrado resultados
+                p {{error}}
+        
+            table.table.table-striped(ng-if="resultados != undefined")
+                thead
+                    tr
+                        th Identificador
+                        th Descripción
+                        th
+                        th
+                tbody
+                    tr(ng-repeat="row in resultados")
+                        td {{row.id}}
+                        td {{row.descripcion}}
+                        td 
+                            a.btn.btn-warning(role="button", href="#/complejidades/editar/{{$index}}") Editar
+                        td 
+                            a.btn.btn-danger(role="button", ng-click="borrar($index)") Borrar
+                            
+            // Diálogo de confirmación.
+            .modal.fade#deleteDialog(role="dialog")
+                .modal-dialog
+                    .modal-content
+                        .modal-header
+                            button.close(type="button", data-dismiss="modal")
+                                span &times;
+                            h4.modal-title Eliminar elemento
+                        .modal-body
+                            p Vas a eliminar el elemento. ¿Estás seguro?
+                            input(type="hidden", id="oculto")
+                        .modal-footer
+                            button.btn.btn-default(type="button", data-dismiss="modal") Cancelar
+                            button.btn.btn-danger(type="button", ng-click="confirmarBorrar()") Sí, bórralo

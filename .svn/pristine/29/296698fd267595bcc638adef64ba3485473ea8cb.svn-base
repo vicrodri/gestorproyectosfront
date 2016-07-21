@@ -1,0 +1,59 @@
+'use strict';
+
+app.controller("listaARQ",listadoArquitecturas);
+app.controller("altaARQ",altaArquitecturas);
+app.controller("editarARQ",editarArquitecturas);
+app.filter('clientSearch', function() {
+	return function(arquitecturas,arquitectura,cliente) {
+
+		var retorno=[];
+
+		if(arquitecturas!=undefined)
+			for(var i=0;i<arquitecturas.length;i++)
+			{
+				console.log(arquitecturas[i].nombre);
+				if(arquitectura==undefined||arquitecturas[i].nombre.toUpperCase().indexOf(arquitectura)==0)
+					retorno.push(arquitecturas[i]);
+
+
+			}
+
+		if(cliente==undefined){
+			cliente="";
+
+		}
+		else
+		{
+			var aux=[];
+			for(var i=0;i<retorno.length;i++)
+			{
+				var p=retorno[i];
+
+				if(p.cliente.nombre.indexOf(cliente.nombre)==0)
+				{
+					aux.push(p);
+				}
+
+			}
+			retorno=aux;
+
+		}
+
+		return retorno;
+	};
+});
+
+app.factory('State',state);
+app.filter("slice",function(){ return function(items,slice)
+		{
+			if(items==undefined)return [];
+			var porcion=slice();
+			console.log(items);
+			return items.slice(porcion.start,porcion.end);
+			
+	
+		}});
+
+
+
+

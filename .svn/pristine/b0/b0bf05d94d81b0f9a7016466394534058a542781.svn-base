@@ -1,0 +1,78 @@
+'use strict';
+
+app.controller("listadoGesTamanos",listadoTamanos);
+app.controller("altaGesTamanos",altaTamanos);
+app.controller("editGesTamanos",editarTamanos);
+
+//Muestra el listado de todos los tamaños
+function listadoTamanos($scope, $http,request) {
+	//funcion para listar tamaños
+	$scope.tamanos={};
+	
+		$scope.listar=function(){
+			console.log("listar Tamaños");
+			request.getTamanos({})
+			.then(function(res){
+				$scope.tamanos = res.data;
+				console.log($scope.tamanos);
+			});
+		}
+	
+	$scope.listar();
+	console.log("hola mundo");
+	
+	//borrar tecnologia
+	$scope.confirmarBorrado=function(tamano){
+		$scope.Btamano=tamano;
+		$('#deleteDialog').modal();
+	}
+	$scope.borrarTamano = function(){
+		request.deleteTamano($scope.Btamano)
+		.then(function successCallback(response) {
+			console.log(response.data);
+			$scope.listar();
+		}
+		,function errorCallback(response){
+			$("#errorDialog").modal();
+			$scope.listar();
+		});
+		$('#deleteDialog').modal('hide');
+	};
+}
+  
+
+//Dar de alta un Tamaño
+function altaTamanos($scope, $http,$location,request){
+	console.log("alta Gestion tamaños");
+	$scope.altaTam={};
+	$scope.submit=function(){
+		console.log($scope.altaTam);
+		request.altaTamanos($scope.altaTam)
+		.then(function successCallback(response) {
+			$location.path("/tamano/");
+		});
+	}
+}
+
+
+
+//edita tecnologias
+function editarTamanos($scope, $http,$routeParams,$location,request){
+
+		var id=$routeParams.id;
+		console.log("editar tamaño "+id);
+		request.getTamanos({'id':id})
+		.then(function(res){
+			$scope.editarTamano=res.data[0];
+			console.log($scope.editarTamano);
+		});
+
+	$scope.submit=function(){
+		
+		console.log($scope.editarTamano);
+		request.putTamano($scope.editarTamano)
+		.then(function successCallback(response) {
+			$location.path("/tamano/");
+		});
+	}
+}

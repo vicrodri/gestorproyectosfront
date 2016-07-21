@@ -1,0 +1,80 @@
+function listadoGesTareas($scope,$http)
+{
+	
+	
+}
+function altaGesTareas($scope,$http)
+{
+	$scope.arquitecturas;
+	$scope.tamanios;
+	$scope.items;
+	$scope.complejidades;
+	
+	$scope.getArquitecturas=function()
+	{
+		var req = {
+				method: 'GET',
+				url: '/api/arquitectura/obtenerArq'
+
+		};
+
+		$http(req).then(function successCallback(response) {
+
+			$scope.arquitecturas=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	
+	$scope.getTamanios=function()
+	{
+		var req = {
+				method: 'GET',
+				url: '/api/tamanio/obtenerTamanios'
+
+		};
+
+		$http(req).then(function successCallback(response) {
+
+			$scope.tamanios=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	$scope.getItems=function()
+	{
+		var req = {
+				method: 'GET',
+				url: '/api/item/obtenerItems'
+
+		};
+
+		$http(req).then(function successCallback(response) {
+
+			$scope.items=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	$scope.getComplejidades=function()
+	{
+		var req = {
+				method: 'GET',
+				url: '/api/complejidad/obtenerComplejidades'
+
+		};
+
+		$http(req).then(function successCallback(response) {
+
+			$scope.complejidades=response.data;
+		}, function errorCallback(response) {
+		});
+	};
+	$scope.submit=function()
+	{
+		
+		$http.post("/api/");
+	};
+	
+	$scope.getArquitecturas();
+	$scope.getTamanios();
+	$scope.getComplejidades();
+	$scope.getItems();
+}

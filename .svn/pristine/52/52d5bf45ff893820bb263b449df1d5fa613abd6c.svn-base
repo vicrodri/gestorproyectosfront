@@ -1,0 +1,80 @@
+form
+	.form-group.container
+		fieldset.form-group
+		
+			.row
+				div.col-sm-4.col-xs-4.col-md-4.col-lg-4
+					label Arquitectura a buscar:
+				div.col-sm-4.col-xs-4.col-md-4.col-lg-4
+					label Cliente a buscar:
+			.row
+				.col-sm-4.col-xs-4.col-md-4.col-lg-4
+						input(class="form-control",type="text" ng-model="filter.nombre",placeholder="Buscar arquitectura")
+				.col-sm-4.col-xs-4.col-md-4.col-lg-4
+						select(class="form-control",ng-model="filter.cliente",ng-options="cliente.nombre for cliente in clientes")
+							option(value="")
+									|Listar todo
+			button.btn.btn-primary(ng-click="listar()")
+					|Buscar
+	.row(ng-show="mostrar")
+			.col-sm-2.col-xs-2.col-md-2.col-lg-2
+				label Numero a listar:
+			.col-sm-1.col-xs-1.col-md-1.col-lg-1
+				select.form-control(ng-change="currPage=1;listar()",ng-model="size",ng-options="valor for valor in sizeValues")
+	table(class="table table-hover",ng-show="mostrar" )
+		tr
+			th
+				|ID ARQUITECTURA
+			th
+				|NOMBRE ARQUITECTURA
+			th
+				|ID CLIENTE
+			th
+				|NOMBRE CLIENTE
+			
+		tr(class="listItem",ng-repeat="arquitectura in arquitecturas|slice:slice")
+			td(class="itemProperty")
+				{{arquitectura.id}}
+			td(class="itemProperty")
+				{{arquitectura.nombre}}
+			td
+				{{arquitectura.cliente.id}}
+			td
+				{{arquitectura.cliente.nombre}}
+			td(class="itemAction")
+				input.btn.btn-default(type="button",ng-click="borrar(arquitectura.id)",value="borrar")
+			td(class="itemAction")
+				input.btn.btn-default(type="button",ng-click="editar(arquitectura.id)",value="Editar")
+div(ng-show="mostrar")						
+	.row
+		.col-md-2.col-lg-2.col-xs-2
+		.col-md-3.col-lg-3.col-xs-3			
+			input.btn.btn-primary.btn-block(type="button",ng-click="atras()",value="atras")
+		.col-md-2.col-lg-2.col-xs-2
+			h4(style="text-align:center") Página:{{currPage}}/{{ceil()}}
+		.col-md-3.col-lg-3.col-xs-3
+			input.btn.btn-primary.btn-block(type="button",value="adelante",ng-click="adelante()")
+	.modal.fade#deleteDialog(role="dialog")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type="button",data-dismiss="modal")
+						span&times;
+					h4.modal-title Eliminar Arquitectura
+				.modal-body
+					p Vas a eliminar la arquitectura seleccionada. ¿Estás seguro?
+				.modal-footer
+					button.btn.btn-default(type="button",data-dismiss="modal") Salir
+						Cancelar
+					button.btn.btn-danger(type="button",ng-click="confirmarBorrar()") Confirmar
+	.modal.fade#errorDialog(role="dialog")
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type="button",data-dismiss="modal")
+						spam&times;
+					h4.modal-title Error en la operación
+				.modal-body
+					p No se ha podido eliminar la arquitectura.
+				.modal-footer
+					button.btn.btn-default(type="button",data-dismiss="modal") Salir

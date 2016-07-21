@@ -1,0 +1,81 @@
+.row
+    .col-lg-2.col-md-2
+    .col-lg-8.col-md-8
+        h1 Gestión de Tecnologías
+.row
+ .col-lg-2.col-md-2.col-sm-2.col-xs-2
+ .col-lg-8.col-md-8.col-sm-8.col-xs-8
+  form.form-inline
+   .form-group
+    input.form-control(type="search", placeholder="Nombre", ng-model="buscar.nombre")
+    input.form-control(type="search", placeholder="Lenguaje", ng-model="buscar.lenguaje")
+    input.form-control(type="search", placeholder="Capa", ng-model="buscar.capa")
+    button.btn.btn-primary(ng-click="listar()")
+     span.glyphicon.glyphicon-search
+
+.gp-info(ng-hide="actionResult == ''", ng-bind-html="actionResult")     
+.row(ng-show="mostrarTabla")
+  .panel.panel-default 
+   .panel-heading(ng-if="tecnologias != undefined")
+    form.form-inline
+     .form-group
+      label Filtrar por:
+      input.form-control(type="text", ng-model="Filtro.nombre", placeholder="Nombre")
+      input.form-control(type="text", ng-model="Filtro.lenguaje", placeholder="Lenguaje")
+      input.form-control(type="text", ng-model="Filtro.capa", placeholder="Capa")
+   .panel-body(ng-if="tecnologias == undefined")
+    p No se han encontrado resultados
+    p {{error}}
+   table.table.table-striped(ng-if="tecnologias != undefined")
+    thead
+     tr
+      th Identificador
+      th Nombre
+      th Lenguaje
+      th Capa
+      th Arquitecturas
+      th 
+      th 
+    tbody
+     tr(ng-repeat="tecnologia in tecnologias|filter:Filtro")
+      td
+       {{tecnologia.id}}
+      td
+       {{tecnologia.nombre}}
+      td
+       {{tecnologia.lenguaje}}
+      td
+       {{tecnologia.capa}}
+      td
+        select(ng-init="foo[tecnologia.id]=tecnologia.arquitecturas[0]",ng-model="foo[tecnologia.id]",ng-options="arquitecturas.nombre for arquitecturas in tecnologia.arquitecturas")
+      td
+       a.btn.btn-warning(role="button", href="#/tecnologias/editar/{{tecnologia.id}}") Editar
+      td
+       a.btn.btn-danger(role="button", ng-click="confirmarBorrado(tecnologia)") Borrar
+    
+  .modal.fade#deleteDialog(role="dialog")
+   .modal-dialog
+    .modal-content
+     .modal-header
+      button.close(type="button", data-dismiss="modal")
+       span &times;
+      h4.modal-title Eliminar tecnologia
+     .modal-body
+      p Vas a eliminar la tecnologia: 
+       b {{Btecnologia.nombre}} 
+       ¿Estás seguro?
+     .modal-footer
+      button.btn.btn-default(type="button", data-dismiss="modal") Cancelar
+      button.btn.btn-danger(type="button", ng-click="borrarTecnologia()") Sí, bórralo
+     
+  .modal.fade#errorDialog(role="dialog")
+   .modal-dialog
+    .modal-content
+     .modal-header
+      button.close(type="button",data-dismiss="modal")
+       spam&times;
+      h4.modal-title Error en la operación
+      .modal-body
+       p No se ha podido eliminar la tecnologia.
+      .modal-footer
+       button.btn.btn-default(type="button",data-dismiss="modal") Salir

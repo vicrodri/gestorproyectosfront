@@ -1,0 +1,20 @@
+.row
+    .col-lg-3.col-md-3
+    .col-lg-6.col-md-6
+        form(name="newForm")
+            fieldset.form-group
+                legend {{newLegend}}
+                
+                .form-group
+                    label(for="descripcion") Descripción
+                    input.form-control(type="text", id="descripcion", required, ng-model="item.descripcion")
+                
+                button.btn.btn-primary(ng-click="(mode == 'edit') ? editar() : alta()" ng-disabled="newForm.$invalid") Enviar
+                a.btn.btn-info(href='#/GruposTareas', role="button") Volver
+    .col-lg-3.col-md-3
+
+.row
+    .col-lg-3.col-md-3
+    .col-lg-6.col-lg-6
+        p {{actionResult}}
+    .col-lg-3.col-md-3     

@@ -1,0 +1,17 @@
+.row
+ .col-lg-3.col-md-3
+ .col-lg-6.col-md-6
+  form(ng-submit="submit()")
+   fieldset.form-group
+     legend Alta de Tecnologia
+    .form-group
+     label Nombre: 
+     input.form-control(type='text', ng-model="altaTec.nombre" required)
+    .form-group
+     label Lenguaje
+     input.form-control(type='text', ng-model="altaTec.lenguaje" required)
+    .form-group
+     label Capa
+     input.form-control(type='text', ng-model="altaTec.capa" required)
+   button.btn.btn-primary() Enviar
+   a.btn.btn-info(href='#/tecnologias/buscar-listado', role="button") Volver

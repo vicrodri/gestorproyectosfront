@@ -1,0 +1,22 @@
+html
+  head
+    title Detalle del proyecto
+  body
+    u
+     h1 Mostrando detalle del proyecto
+   nav
+    label(ng-model="data") 
+      h2 Nombre:{{data.nombre}}
+      nav
+          ul
+            li
+              a(href='#/funcionalidades') 
+                h3 Gestión de Funcionalidades
+            li 
+              a(href='#/estimacion') 
+                h3 Gestión de Estimación
+            li
+              a(href='#/entregas') 
+                h3 Gestión de Entregas 
+                
+            a.btn.btn-info(href='#/proyectos', role="button") Volver        

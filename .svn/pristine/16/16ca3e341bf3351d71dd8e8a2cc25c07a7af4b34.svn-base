@@ -1,0 +1,5 @@
+'use strict';
+
+app.controller("listadoGesPersonas",listadoPersonas);
+app.controller("altaGesPersonas",altaPersonas);
+app.controller("editGesPersonas",editarPersonas);

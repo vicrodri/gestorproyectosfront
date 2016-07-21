@@ -1,0 +1,3 @@
+app.controller("listadoItem",listadoItem);
+app.controller("altaItem",altaItem);
+app.filter("filtroArq",function(){return filtroArq});
